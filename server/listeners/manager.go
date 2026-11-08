@@ -17,7 +17,7 @@ type Manager struct {
 	windowSize uint64
 	activeHTTP *http.Server
 	activeDNS  *dns.Server
-	activeWS *http.Server
+	activeWS *http.Server'
 	activeDoH *http.Server
 	mu         sync.Mutex
 	Receiver   *receiver.Receiver
@@ -39,28 +39,27 @@ func (m *Manager) Start() {
 		protocol := crypto.GetProtocol(m.key, counter)
 		fmt.Printf("active window counter: %d, protocol: %d\n", counter, protocol)
 		switch protocol {
-		case 0:
-			m.StopDNS()
-			m.StopWebSocket()
-			m.StopDoH()
-			m.StartHTTPS()
-		case 1:
-			m.StopHTTPS()
-			m.StopWebSocket()
-			m.StopDoH()
-			m.StartDNS()
-		case 2:
-			m.StopHTTPS()
-			m.StopDNS()
-			m.StopDoH()
-			m.StartWebSocket()
-		case 3:
-			m.StopHTTPS()
-			m.StopDNS()
-			m.StopWebSocket()
-			m.StartDoH()
-		}
-
+			case 0:
+				m.StopDNS()
+				m.StopWebSocket()
+				m.StopDoH()
+				m.StartHTTPS()
+			case 1:
+				m.StopHTTPS()
+				m.StopWebSocket()
+				m.StopDoH()
+				m.StartDNS()
+			case 2:
+				m.StopHTTPS()
+				m.StopDNS()
+				m.StopDoH()
+				m.StartWebSocket()
+			case 3:
+				m.StopHTTPS()
+				m.StopDNS()
+				m.StopWebSocket()
+				m.StartDoH()
+			}
 		now := uint64(time.Now().UnixNano())
 		elapsed := now % m.windowSize
 		remaining := m.windowSize - elapsed
