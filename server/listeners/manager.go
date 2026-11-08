@@ -17,6 +17,8 @@ type Manager struct {
 	windowSize uint64
 	activeHTTP *http.Server
 	activeDNS  *dns.Server
+	activeWS *http.Server
+	activeDoH *http.Server
 	mu         sync.Mutex
 	Receiver   *receiver.Receiver
 	Queue      *queue.Queue
@@ -39,13 +41,26 @@ func (m *Manager) Start() {
 		switch protocol {
 		case 0:
 			m.StopDNS()
+			m.StopWebSocket()
+			m.StopDoH()
 			m.StartHTTPS()
 		case 1:
 			m.StopHTTPS()
+			m.StopWebSocket()
+			m.StopDoH()
 			m.StartDNS()
+		case 2:
+			m.StopHTTPS()
+			m.StopDNS()
+			m.StopDoH()
+			m.StartWebSocket()
+		case 3:
+			m.StopHTTPS()
+			m.StopDNS()
+			m.StopWebSocket()
+			m.StartDoH()
 		}
 
-		// Align sleep with the remaining time in the current window epoch to prevent drift
 		now := uint64(time.Now().UnixNano())
 		elapsed := now % m.windowSize
 		remaining := m.windowSize - elapsed

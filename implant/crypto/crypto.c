@@ -60,5 +60,5 @@ uint8_t get_protocol(uint8_t key[32], uint64_t counter) {
     ChaCha20_xor(&ctx, &result, 1);
     ChaCha20_clear(&ctx);
 
-    return result % 2;
+    return result % 4;
 }

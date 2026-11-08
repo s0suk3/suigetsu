@@ -16,5 +16,5 @@ func GetProtocol(key [32]byte, counter uint64) byte {
 	cipher, _ := chacha20.NewUnauthenticatedCipher(key[:], counterBytes[:])
 	result := make([]byte, 1)
 	cipher.XORKeyStream(result, result)
-	return result[0]%2
+	return result[0]%4
 }
