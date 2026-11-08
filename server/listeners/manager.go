@@ -17,7 +17,7 @@ type Manager struct {
 	windowSize uint64
 	activeHTTP *http.Server
 	activeDNS  *dns.Server
-	activeWS *http.Server'
+	activeWS *http.Server
 	activeDoH *http.Server
 	mu         sync.Mutex
 	Receiver   *receiver.Receiver
